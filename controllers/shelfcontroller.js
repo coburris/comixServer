@@ -2,7 +2,7 @@ const router = require('express').Router();
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 let Comic = require('../db.js').import('../models/comic');
-const validateSession = require('../middleware/validate-session')
+const validateSession = require('../middleware/validate-session');
 
 
 
