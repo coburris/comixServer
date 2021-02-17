@@ -2,7 +2,8 @@ const router = require('express').Router();
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 let Comic = require('../db.js').import('../models/comic');
-const validateSession = require('../middleware/validate-session')
+const validateSession = require('../middleware/validate-session');
+
 
 
 /* Test Endpoint */
@@ -53,12 +54,27 @@ router.post('/', validateSession, function(req,res) {
 /*****************************
  *** GET COMICS BY USER ID ***
  ****************************/
-
+router.get('/', validateSession, function(req, res){
+  Comic.findAll({
+    where:{
+      owner: req.user.id
+    }
+  })
+  .then(logs => res.status(200).json(logs))
+  .catch(err => res.status(500).json({error: err}))
+});
 
 /**********************
- *** DELETE COMIC ***
+ *** DELETE COMIC *****
  **********************/
 
+router.delete("/delete/:id", validateSession, function(req, res) {
+  const query = {where: {id: req.params.id, owner: req.user.id}}
+
+  Comic.destroy(query)
+  .then(() => res.status(200).json({message: "Death Ray Deployment Success! Comic DELETED!"}))
+  .catch((err) => res.status(500).json({error: err}));
+});
 
  /**********************
  *** UPDATE COMIC ***
