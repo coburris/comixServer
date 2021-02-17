@@ -3,10 +3,6 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 let Comic = require('../db.js').import('../models/comic');
 const validateSession = require('../middleware/validate-session');
-<<<<<<< HEAD
-=======
-
->>>>>>> c650b814b9841e5c2ad92361e842321871a806e9
 
 
 /* Test Endpoint */
@@ -57,10 +53,18 @@ router.post('/', validateSession, function(req,res) {
 /*****************************
  *** GET COMICS BY USER ID ***
  ****************************/
-
+router.get('/', validateSession, function(req, res){
+  Comic.findAll({
+    where:{
+      owner: req.user.id
+    }
+  })
+  .then(logs => res.status(200).json(logs))
+  .catch(err => res.status(500).json({error: err}))
+});
 
 /**********************
- *** DELETE COMIC ***
+ *** DELETE COMIC *****
  **********************/
 
 
