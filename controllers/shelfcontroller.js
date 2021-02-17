@@ -2,6 +2,7 @@ const router = require('express').Router();
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 let Comic = require('../db.js').import('../models/comic');
+const validateSession = require('../middleware/validate-session')
 
 
 /* Test Endpoint */
@@ -63,6 +64,20 @@ router.post('/', validateSession, function(req,res) {
  *** UPDATE COMIC ***
  **********************/
 
+router.put('/:id', validateSession, (req,res) => {
+  const updateEntry = {
+    status: req.body.status
+  };
+  const query = {
+    where: {
+      id: req.params.id,
+      owner: req.user.id
+    }};
+
+    Comic.update(updateEntry, query)
+    .then((comic) => res.status(200).json(comic))
+    .catch((err) => res.status(500).json({ error: err}));
+})
 
 
 module.exports = router
