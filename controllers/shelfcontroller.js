@@ -10,7 +10,7 @@ const validateSession = require('../middleware/validate-session');
 router.get('/hello', function(req, res) {
   res.send(
     '<h1>Reached the comicController welcome route.</h1>'
-     + '<p> I can put html here  and it renders fine. Interesting.</p>'
+    + '<p> I can put html here  and it renders fine. Interesting.</p>'
   )
 });
 
@@ -61,7 +61,7 @@ router.post('/', validateSession, function(req,res) {
  **********************/
 
 
- /**********************
+/**********************
  *** UPDATE COMIC ***
  **********************/
 
