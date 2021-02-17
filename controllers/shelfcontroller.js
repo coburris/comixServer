@@ -54,17 +54,46 @@ router.post('/', validateSession, function(req,res) {
 /*****************************
  *** GET COMICS BY USER ID ***
  ****************************/
-
+router.get('/', validateSession, function(req, res){
+  Comic.findAll({
+    where:{
+      owner: req.user.id
+    }
+  })
+  .then(logs => res.status(200).json(logs))
+  .catch(err => res.status(500).json({error: err}))
+});
 
 /**********************
- *** DELETE COMIC ***
+ *** DELETE COMIC *****
  **********************/
 
+router.delete("/delete/:id", validateSession, function(req, res) {
+  const query = {where: {id: req.params.id, owner: req.user.id}}
+
+  Comic.destroy(query)
+  .then(() => res.status(200).json({message: "Death Ray Deployment Success! Comic DELETED!"}))
+  .catch((err) => res.status(500).json({error: err}));
+});
 
 /**********************
  *** UPDATE COMIC ***
  **********************/
 
+router.put('/:id', validateSession, (req,res) => {
+  const updateEntry = {
+    status: req.body.status
+  };
+  const query = {
+    where: {
+      id: req.params.id,
+      owner: req.user.id
+    }};
+
+    Comic.update(updateEntry, query)
+    .then((comic) => res.status(200).json(comic))
+    .catch((err) => res.status(500).json({ error: err}));
+})
 
 
 module.exports = router
