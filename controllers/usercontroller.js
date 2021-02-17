@@ -2,7 +2,7 @@ const router = require('express').Router();
 const User = require('../db').import('../models/user');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
-User = require('../db').import('../models/user')
+
 
 router.post('/register', function(req,res){
     User.create({
@@ -26,12 +26,12 @@ router.post('/login', function(req,res){
 
     User.findOne({
         where: {
-            username: req.body.user.username
+            username: req.body.username
         }
     })
     .then(function loginSuccess(user) {
         if (user) {
-            bcrypt.compare(req.body.user.password, user.password, function(err, matches){
+            bcrypt.compare(req.body.password, user.password, function(err, matches){
                 if (matches) {
 
                     let token = jwt.sign({ id: user.id,}, process.env.JWT_SECRET, {expiresIn: 60*60*24})
