@@ -7,6 +7,9 @@ let shelf = require('./controllers/shelfcontroller');
 let user = require('./controllers/usercontroller');
 
 sequelize.sync();
+app.use(require('./middleware/headers'));
+app.use(express.json());
+
 
 app.use('/user', user);
 app.use('/shelf', shelf);
