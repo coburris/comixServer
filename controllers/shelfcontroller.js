@@ -20,6 +20,7 @@ router.get('/hello', function(req, res) {
  **********************/
 router.post('/', validateSession, function(req,res) {
   console.log("******** GOT HERE IN COMIC POST ENDPOINT *********");
+  console.log("Here is the data from the request")
   console.log(req.body);
   const comicEntry = {
     issue_id: req.body.issue_id,
@@ -37,9 +38,11 @@ router.post('/', validateSession, function(req,res) {
     thumb_image_url: req.body.thumb_image_url,
     small_image_url: req.body.small_image_url,
     api_detail_url: req.body.api_detail_url,
-    owner: req.body.owner,
+    owner: req.user.id,
     status: req.body.status
   }
+  console.log("Here is the data goingto the middleware")
+  console.log(comicEntry)
 
   Comic.create(comicEntry)
   .then(function comicCreateSuccess(comic_data){
@@ -94,6 +97,5 @@ router.put('/:id', validateSession, (req,res) => {
     .then((comic) => res.status(200).json(comic))
     .catch((err) => res.status(500).json({ error: err}));
 })
-
 
 module.exports = router
