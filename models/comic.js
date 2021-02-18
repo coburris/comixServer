@@ -39,8 +39,8 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: true
     },
     description: {
-      type: DataTypes.TEXT,
-      allowNull: false
+      type: DataTypes.STRING(5000),
+      allowNull: true
     },
     characters: {
       type: DataTypes.ARRAY(DataTypes.STRING),
