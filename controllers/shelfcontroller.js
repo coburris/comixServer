@@ -84,8 +84,10 @@ router.delete("/delete/:id", validateSession, function(req, res) {
  **********************/
 
 router.put('/:id', validateSession, (req,res) => {
+  console.log(req.body.status)
   const updateEntry = {
-    status: req.body.status
+    status: req.body.status,
+    issue_name: req.body.issue_name  //change to allow more data to be added
   };
   const query = {
     where: {
