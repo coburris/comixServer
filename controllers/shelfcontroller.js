@@ -84,8 +84,18 @@ router.delete("/delete/:id", validateSession, function(req, res) {
  **********************/
 
 router.put('/:id', validateSession, (req,res) => {
+  console.log(req.body.status)
   const updateEntry = {
-    status: req.body.status
+    status: req.body.status,
+    issue_name: req.body.issue_name,
+    volume_name: req.body.volume_name,
+    issue_number: req.body.issue_number,
+    publisher: req.body.publisher,
+    cover_date: req.body.cover_date,
+    characters: req.body.characters,
+    teams: req.body.teams,
+    story_arcs: req.body.story_arcs,
+    description: req.body.description
   };
   const query = {
     where: {
