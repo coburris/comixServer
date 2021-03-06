@@ -17,6 +17,8 @@ app.use('/user', user);
 app.use('/shelf', shelf);
 
 
-app.listen(3000, function(){
-    console.log('App is listening on port 3000');
+// If your using express to listen on a port it will be app.listen. 
+// If your using node http to listen on a port it will be http.listen.  
+app.listen(process.env.PORT, () => {
+    console.log(`server is listening on port ${process.env.PORT}`)
 })
